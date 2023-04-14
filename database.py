@@ -3,17 +3,19 @@ import mysql.connector
 from constantes import FECHA_ACTUAL
 
 def conectDb():
-    connection = mysql.connector.connect(
-        host=os.getenv('DB_HOST'),
-        database=os.getenv('DB_NAME'),
-        user=os.getenv('DB_USER'),
-        password=os.getenv('DB_PASSWORD')
-    )
+    try:
+        connection = mysql.connector.connect(
+            host=os.getenv('DB_HOST'),
+            database=os.getenv('DB_NAME'),
+            user=os.getenv('DB_USER'),
+            password=os.getenv('DB_PASSWORD')
+        )
 
-    if connection.is_connected():
-        cursor = connection.cursor()
-        return connection, cursor
-    else:
+        if connection.is_connected():
+            cursor = connection.cursor()
+            return connection, cursor
+    except:
+        print("No se pudo realizar la conexión a la base de datos")
         return None, None
 
 def getAllNotifications():

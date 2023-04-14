@@ -24,8 +24,8 @@ def sendNotifies():
             notifyUser(notis[0], notis[1])
     elif(notificaciones):
         for notificacion in notificaciones:
-            if notificacion.fecha == FECHA_ACTUAL:
-                notifyUser(notificacion.titulo, notificacion.mensaje)
+            if notificacion["fecha"] == FECHA_ACTUAL:
+                notifyUser(notificacion["titulo"], notificacion["mensaje"])
     else:
         notification.notify("Error", "se produjo un error en la conexion")
 
