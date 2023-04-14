@@ -1,8 +1,12 @@
 # Simple python notifier
-La aplicación verifica si hay notificacion para la fecha actual y emite una notificación en el escritorio
 
-# Prerequisitos
-crear la base de datos, y cargar las notificaciones
+La aplicación verifica en la base de datos definida si existe notificacion para la fecha actual y emite una notificación en el escritorio. En caso de haber un problema con la conexión se toman los datos desde un archivo con notificaciones en un diccionario de python llamado "notificaciones.py"
 
-# pasos a seguir
-tener un cron que corra cada cierto tiempo ejecutando el script
+## Prerequisitos
+
+- Crear la base de datos a utilizar
+- Cargar las notificaciones de manera manual
+
+## pasos a seguir
+
+- Crear un cron job para que corra el script a un tiempo determinado por día para verificar notificaciones

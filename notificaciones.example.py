@@ -1,0 +1,7 @@
+notificaciones = [
+    {
+        "fecha": "",
+        "titulo": "",
+        "mensaje": ""
+    }
+]

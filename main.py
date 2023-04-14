@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
 from plyer import notification
-import mysql.connector
-from datetime import datetime
+from database import getAllNotifications
+from constantes import FECHA_ACTUAL
+from notificaciones import notificaciones
 
 load_dotenv()
-
 
 def notifyUser(title, message):
     notification.notify(
@@ -16,58 +16,21 @@ def notifyUser(title, message):
         timeout=10
     )
 
-
-def conectDb():
-    connection = mysql.connector.connect(
-        host=os.getenv('DB_HOST'),
-        database=os.getenv('DB_NAME'),
-        user=os.getenv('DB_USER'),
-        password=os.getenv('DB_PASSWORD')
-    )
-
-    if connection.is_connected():
-        cursor = connection.cursor()
-        return connection, cursor
-    else:
-        return None, None
-
-
-def getAllNotifications():
-    connection, cursor = conectDb()
-
-    if(connection and cursor):
-
-        fecha_actual = datetime.today().strftime('%Y-%m-%d')
-
-        query = "SELECT title, message FROM notifies WHERE time_to_notify LIKE '" + \
-            fecha_actual + "%';"
-
-        cursor.execute(query)
-
-        records = cursor.fetchall()
-
-        connection.close()
-        cursor.close()
-
-        return records
-
-    else:
-        return None
-
-
 def sendNotifies():
     notifies = getAllNotifications()
 
     if(notifies):
         for notis in notifies:
             notifyUser(notis[0], notis[1])
+    elif(notificaciones):
+        for notificacion in notificaciones:
+            if notificacion.fecha == FECHA_ACTUAL:
+                notifyUser(notificacion.titulo, notificacion.mensaje)
     else:
-        notify("Error", "se produjo un error en la conexion")
-
+        notification.notify("Error", "se produjo un error en la conexion")
 
 def main():
     sendNotifies()
-
 
 if __name__ == "__main__":
     main()
